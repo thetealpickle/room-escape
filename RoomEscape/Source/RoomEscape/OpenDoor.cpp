@@ -30,7 +30,7 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	float WorldTime = GetWorld()->GetTimeSeconds;
+	float WorldTime = GetWorld()->GetTimeSeconds();
 	// check the pressure plate, if activated then open door
 	if (PressurePlate->IsOverlappingActor(ActorThatOpens)) {
 		OpenDoor();
