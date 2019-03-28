@@ -18,8 +18,8 @@ void UGrabber::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
 	
+	UE_LOG(LogTemp, Warning, TEXT("I AM A GRABBER, HEHE. My name is grabbie"));
 }
 
 
