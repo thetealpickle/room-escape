@@ -49,8 +49,7 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	//);
 
 	// ray-cast out to reach distance
-	//FVector LineTraceEnd = PlayerViewPointLocation + PlayerViewPointRotation.Vector() * 2;
-	FVector LineTraceEnd = PlayerViewPointLocation + FVector(0.0f, 0.0f, 50.f);
+	FVector LineTraceEnd = PlayerViewPointLocation + PlayerViewPointRotation.Vector() * Reach;
 
 	DrawDebugLine(
 		GetWorld(),
