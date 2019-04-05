@@ -23,6 +23,17 @@ void UGrabber::BeginPlay()
 
 	
 	UE_LOG(LogTemp, Warning, TEXT("I AM A GRABBER, HEHE. My name is grabbie"));
+
+	/// look for physics handle instance
+	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
+	if (!PhysicsHandle) {
+		UE_LOG(LogTemp, Error, TEXT("Physics Handle was not found for actor: %s"), *(GetOwner()->GetName()))
+	}
+
+	InputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
+	if (InputComponent) {
+		UE_LOG(LogTemp, Warning, TEXT("Input Component was found for actor: %s"), *(GetOwner()->GetName()));
+	}
 }
 
 
@@ -40,13 +51,6 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 		OUT PlayerViewPointLocation,
 		OUT PlayerViewPointRotation
 	);
-
-
-	//UE_LOG(LogTemp, Warning, TEXT("Hey this is the player view point location: %s, and rotation: %s"), 
-	//	*PlayerViewPointLocation.ToString(), 
-	//	*PlayerViewPointRotation.ToString()
-	//
-	//);
 
 	/// ray-cast out to reach distance
 	FVector LineTraceEnd = PlayerViewPointLocation + PlayerViewPointRotation.Vector() * Reach;
