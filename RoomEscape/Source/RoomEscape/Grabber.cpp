@@ -37,7 +37,7 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	FRotator PlayerViewPointRotation;
 
 	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(
-		OUT PlayerViewPointLocation, 
+		OUT PlayerViewPointLocation,
 		OUT PlayerViewPointRotation
 	);
 
@@ -77,6 +77,11 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	);
 
 	// see what we hit
+	AActor *ActorHit = Hit.GetActor();
+	if (ActorHit != NULL) {
+		FString ActorName(ActorHit->GetName());
+		UE_LOG(LogTemp, Warning, TEXT("Hey, the actor wee hit is named: %s"), *ActorName);
 
+	}
 }
 
