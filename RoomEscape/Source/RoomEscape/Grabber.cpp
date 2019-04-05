@@ -33,6 +33,9 @@ void UGrabber::BeginPlay()
 	InputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
 	if (InputComponent) {
 		UE_LOG(LogTemp, Warning, TEXT("Input Component was found for actor: %s"), *(GetOwner()->GetName()));
+
+		/// bind the input axis
+		InputComponent->BindAction("grab", IE_Pressed, this, &UGrabber::Grab);
 	}
 }
 
@@ -89,3 +92,6 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	}
 }
 
+void UGrabber::Grab() {
+	UE_LOG(LogTemp, Warning, TEXT("Hey, hey, this should be a grab!!"));
+}
