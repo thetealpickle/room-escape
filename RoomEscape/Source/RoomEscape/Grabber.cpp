@@ -143,6 +143,7 @@ void UGrabber::Release() {
 	UE_LOG(LogTemp, Warning, TEXT("Hey, hey, this should be a release!!"));
 
 	// TODO: release physics handle
+	PhysicsHandle->ReleaseComponent();
 }
 
 
