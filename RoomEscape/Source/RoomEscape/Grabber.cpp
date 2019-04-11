@@ -15,7 +15,6 @@ UGrabber::UGrabber()
 	// ...
 }
 
-
 // Called when the game starts
 void UGrabber::BeginPlay()
 {
@@ -33,9 +32,39 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// if physics handle attached: move currently holding object
+}
 
-	// Get player view
+void UGrabber::FindPhysicsHandleComponent()
+{
+	/// look for physics handle instance
+	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
+	if (!PhysicsHandle) {
+		UE_LOG(LogTemp, Error, TEXT("Physics Handle was not found for actor: %s"), *(GetOwner()->GetName()))
+	}
+}
 
+void UGrabber::SetupInputComponent()
+{
+	InputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
+	if (InputComponent) {
+		UE_LOG(LogTemp, Warning, TEXT("Input Component was found for actor: %s"), *(GetOwner()->GetName()));
+
+		/// bind the input axis
+		InputComponent->BindAction("grab", IE_Pressed, this, &UGrabber::Grab);
+		InputComponent->BindAction("grab", IE_Released, this, &UGrabber::Release);
+	}
+}
+
+void UGrabber::Grab() {
+	UE_LOG(LogTemp, Warning, TEXT("Hey, hey, this should be a grab!!"));
+
+	GetFirstPhysicsBodyInReach();
+
+	// TODO: attach physics handle
+}
+
+void UGrabber::GetFirstPhysicsBodyInReach()
+{
 	FVector PlayerViewPointLocation;
 	FRotator PlayerViewPointRotation;
 
@@ -79,33 +108,6 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 		UE_LOG(LogTemp, Warning, TEXT("Hey, the actor wee hit is named: %s"), *ActorName);
 
 	}
-}
-
-void UGrabber::FindPhysicsHandleComponent()
-{
-	/// look for physics handle instance
-	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
-	if (!PhysicsHandle) {
-		UE_LOG(LogTemp, Error, TEXT("Physics Handle was not found for actor: %s"), *(GetOwner()->GetName()))
-	}
-}
-
-void UGrabber::SetupInputComponent()
-{
-	InputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
-	if (InputComponent) {
-		UE_LOG(LogTemp, Warning, TEXT("Input Component was found for actor: %s"), *(GetOwner()->GetName()));
-
-		/// bind the input axis
-		InputComponent->BindAction("grab", IE_Pressed, this, &UGrabber::Grab);
-		InputComponent->BindAction("grab", IE_Released, this, &UGrabber::Release);
-	}
-}
-
-void UGrabber::Grab() {
-	UE_LOG(LogTemp, Warning, TEXT("Hey, hey, this should be a grab!!"));
-
-	// TODO: attach physics handle
 }
 
 void UGrabber::Release() {

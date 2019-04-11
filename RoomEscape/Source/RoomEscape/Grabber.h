@@ -22,21 +22,29 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	void FindPhysicsHandleComponent();
+
 
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	// ray-cast and grab the object in reach
-	void Grab();
-	void Release();
-
 private:
 	float Reach = 100.0f;
 
+	// Physics Handle - setup and init
 	UPhysicsHandleComponent *PhysicsHandle = nullptr;
 	void FindPhysicsHandleComponent();
 
+	// Input Component - setup and init
 	UInputComponent *InputComponent = nullptr;
+	void SetupInputComponent();
+
+	// ray-cast and grab the object in reach
+	void Grab();
+
+	// grab has been released
+	void Release();
+
+	FHitResult GetFirstPhysicsBodyInReach() const;
+
 };
