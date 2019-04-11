@@ -20,31 +20,19 @@ UGrabber::UGrabber()
 void UGrabber::BeginPlay()
 {
 	Super::BeginPlay();
-
 	
 	UE_LOG(LogTemp, Warning, TEXT("I AM A GRABBER, HEHE. My name is grabbie"));
 
-	/// look for physics handle instance
-	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
-	if (!PhysicsHandle) {
-		UE_LOG(LogTemp, Error, TEXT("Physics Handle was not found for actor: %s"), *(GetOwner()->GetName()))
-	}
-
-	InputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
-	if (InputComponent) {
-		UE_LOG(LogTemp, Warning, TEXT("Input Component was found for actor: %s"), *(GetOwner()->GetName()));
-
-		/// bind the input axis
-		InputComponent->BindAction("grab", IE_Pressed, this, &UGrabber::Grab);
-		InputComponent->BindAction("grab", IE_Released, this, &UGrabber::Release);
-	}
+	FindPhysicsHandleComponent();
+	SetupInputComponent();
 }
-
 
 // Called every frame
 void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	// if physics handle attached: move currently holding object
 
 	// Get player view
 
@@ -93,10 +81,37 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	}
 }
 
+void UGrabber::FindPhysicsHandleComponent()
+{
+	/// look for physics handle instance
+	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
+	if (!PhysicsHandle) {
+		UE_LOG(LogTemp, Error, TEXT("Physics Handle was not found for actor: %s"), *(GetOwner()->GetName()))
+	}
+}
+
+void UGrabber::SetupInputComponent()
+{
+	InputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
+	if (InputComponent) {
+		UE_LOG(LogTemp, Warning, TEXT("Input Component was found for actor: %s"), *(GetOwner()->GetName()));
+
+		/// bind the input axis
+		InputComponent->BindAction("grab", IE_Pressed, this, &UGrabber::Grab);
+		InputComponent->BindAction("grab", IE_Released, this, &UGrabber::Release);
+	}
+}
+
 void UGrabber::Grab() {
 	UE_LOG(LogTemp, Warning, TEXT("Hey, hey, this should be a grab!!"));
+
+	// TODO: attach physics handle
 }
 
 void UGrabber::Release() {
 	UE_LOG(LogTemp, Warning, TEXT("Hey, hey, this should be a release!!"));
+
+	// TODO: release physics handle
 }
+
+
