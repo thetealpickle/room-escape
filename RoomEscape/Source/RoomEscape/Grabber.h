@@ -46,6 +46,12 @@ private:
 	// grab has been released
 	void Release();
 
+	// returns the reach line start
+	FVector GetReachLineStart();
+
+	// returns the reach line end
+	FVector GetReachLineEnd();
+
 	FHitResult GetFirstPhysicsBodyInReach() const;
 
 };
