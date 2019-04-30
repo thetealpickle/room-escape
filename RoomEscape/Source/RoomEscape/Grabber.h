@@ -23,7 +23,11 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	// returns the reach line start
+	FVector LineEnd;
+	FVector LineStart;
 
+	void CalculateLineTrace();
 
 public:	
 	// Called every frame
@@ -46,12 +50,6 @@ private:
 	// grab has been released
 	void Release();
 
-	// returns the reach line start
-	FVector GetReachLineStart();
-
-	// returns the reach line end
-	FVector GetReachLineEnd();
-
-	FHitResult GetFirstPhysicsBodyInReach() const;
+	FHitResult GetFirstPhysicsBodyInReach();
 
 };
